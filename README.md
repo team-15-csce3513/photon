@@ -1,3 +1,6 @@
-# photon
-
-Laser tag project for UARK CSCE 3513 - Software Engineering
+Full name          Github name
+---------------------------------
+Aaliyah Garcia     aaliyahgarcia
+Giovanni Huesca    GioWPS
+Nadine Filat       lilnadine
+Pranav Mahesh      pmahesh29

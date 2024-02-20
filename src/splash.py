@@ -19,6 +19,7 @@ def build(root: tk.Tk) -> tk.Label:
 
 if __name__ == "__main__":
     root = tk.Tk()
+    root.geomentry("800x600")
     splash_screen = build(root)
 
     # After 3 seconds, destroy the splash screen

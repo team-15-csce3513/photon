@@ -6,6 +6,15 @@ from entry import create_player_entry_screen
 #from udpserver import udp_server
 import threading
 import time
+import os
+import supabase
+from dotenv import load_dotenv
+
+load_dotenv()
+supabase_client: supabase.Client = supabase.create_client(
+    os.getenv("SUPABASE_URL"),
+    os.getenv("SUPABASE_KEY")
+)
 
 def main():
     root = tk.Tk()

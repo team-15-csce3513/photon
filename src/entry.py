@@ -29,27 +29,27 @@ def create_player_entry_screen():
     Text1.pack()
 
     # Buttons that will be on bottom of screen 
-    B1 = Button(text = "Edit Game", fg='green', bg='black')
+    B1 = Button(text = "Edit Game", fg='green', bg='yellow')
     B1.place(x=0, y=500)
     B1.config(height=5)
-    B2 = Button(text = "Game Parameters", fg='green', bg='black')
-    B2.place(x=95, y=500)
+    B2 = Button(text = "Game Parameters", fg='green', bg='yellow')
+    B2.place(x=97, y=500)
     B2.config(height=5)
-    B3 = Button(text = "Start Game", fg='green', bg='black')
-    B3.place(x=235, y=500)
+    B3 = Button(text = "Start Game", fg='green', bg='yellow')
+    B3.place(x=242, y=500)
     B3.config(height=5)
-    B4 = Button(text = "PreEntered Games", fg='green', bg='black')
-    B4.place(x=340, y=500)
+    B4 = Button(text = "PreEntered Games", fg='green', bg='yellow')
+    B4.place(x=342, y=500)
     B4.config(height=5)
     #B5 = Button(text = "")
     #B5.place(x=475, y=550)
-    B6 = Button(text = "View Game", fg='green', bg='black')
-    B6.place(x=490, y=500)
+    B6 = Button(text = "View Game", fg='green', bg='yellow')
+    B6.place(x=495, y=500)
     B6.config(height=5)
-    B7 = Button(text = "Flick Sync", fg='green', bg='black')
-    B7.place(x=600, y=500)
+    B7 = Button(text = "Flick Sync", fg='green', bg='yellow')
+    B7.place(x=602, y=500)
     B7.config(height=5)
-    B8 = Button(text = "Clear Game", fg='green', bg='black')
+    B8 = Button(text = "Clear Game", fg='green', bg='yellow')
     B8.place(x=700, y=500)
     B8.config(height=5)
 
@@ -59,5 +59,3 @@ def create_player_entry_screen():
 # Main program
 if __name__ == "__main__":
     create_player_entry_screen()
-
-

@@ -9,8 +9,14 @@ import time
 
 def main():
     root = tk.Tk()
+    def close_root(event):
+        root.destroy()
+
     root.title("Main Application")
     root.geometry("800x600")
+    root.configure(bg="black")  # Set the background color of the window to black
+
+    root.bind('<Escape>', close_root)
 
     # Build and display splash screen
     splash_screen = build_splash(root)

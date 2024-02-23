@@ -1,29 +1,22 @@
 import tkinter as tk
 from splash import build as build_splash
 from entry import create_player_entry_screen
-
-#from udpclient import udp_client
-#from udpserver import udp_server
 import threading
 import time
-import os
-import supabase
-from dotenv import load_dotenv
+from supabase_config import initialize_supabase
 
-load_dotenv()
-supabase_client: supabase.Client = supabase.create_client(
-    os.getenv("SUPABASE_URL"),
-    os.getenv("SUPABASE_KEY")
-)
+# Create Supabase client
+supabase_client = initialize_supabase()
 
 def main():
     root = tk.Tk()
+
     def close_root(event):
         root.destroy()
 
     root.title("Main Application")
     root.geometry("800x600")
-    root.configure(bg="black")  # Set the background color of the window to black
+    root.configure(bg="black")
 
     root.bind('<Escape>', close_root)
 
@@ -41,15 +34,15 @@ def main():
     create_player_entry_screen()
 
     # Run UDP client and server in separate threads
-   # client_thread = threading.Thread(target=udp_client)
-   # server_thread = threading.Thread(target=udp_server)
+    # client_thread = threading.Thread(target=udp_client)
+    # server_thread = threading.Thread(target=udp_server)
 
-   # client_thread.start()
-   # server_thread.start()
+    # client_thread.start()
+    # server_thread.start()
 
     # Wait for both threads to finish
-   # client_thread.join()
-   # server_thread.join()
+    # client_thread.join()
+    # server_thread.join()
 
     root.mainloop()
 

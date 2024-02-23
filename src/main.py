@@ -4,6 +4,15 @@ from entry import create_player_entry_screen
 import threading
 import time
 from supabase_config import initialize_supabase
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Print loaded environment variables (for debugging)
+print("SUPABASE_URL:", os.getenv("SUPABASE_URL"))
+print("SUPABASE_KEY:", os.getenv("SUPABASE_KEY"))
 
 # Create Supabase client
 supabase_client = initialize_supabase()
@@ -48,3 +57,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+ 

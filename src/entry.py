@@ -24,8 +24,8 @@ def create_player_entry_screen():
     textFont = font.Font(family='Helvetica', size=25, weight='bold')
     Text1 = tk.Text(height=1, width=16, font = textFont)
     Text1.tag_configure('blue_text', foreground='blue')
-    Text1.insert("1.0", "Edit Current Game")
-    Text1.tag_add('blue_text', "1.0", "end")
+    Text1.insert("1.0", "Laser Tag Game\n", "blue_text")
+    # Text1.tag_add('blue_text', "1.0", "end")
     Text1.pack()
 
     # Buttons that will be on bottom of screen 

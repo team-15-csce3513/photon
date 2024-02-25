@@ -22,7 +22,7 @@ def create_player_entry_screen(supabase_client):
 
     # Create and configure the header label
     header_font = font.Font(family='Helvetica', size=100, weight='bold')
-    header_label = Label(window, text="Laser Tag Game", font=header_font, fg='white')
+    header_label = Label(window, text="Team-15 Laser Tag Game", font=header_font, fg='white')
     header_label.grid(row=0, column=0, columnspan=6, pady=(20, 10), sticky="ew")
     header_label.config(font=("Helvetica", 50, "bold"))
 
@@ -68,25 +68,31 @@ def create_player_entry_screen(supabase_client):
             transmit_equipment_code(equipment_id, 'green')
         print("Equipment codes transmitted for green team.")
 
-    B1 = Button(window, text="Edit Game", fg='green', bg='yellow')
-    B1.grid(row=17, column=1, padx=5, pady=5)
 
-    B2 = Button(window, text="Game Parameters", fg='green', bg='yellow')
-    B2.grid(row=17, column=2, padx=5, pady=5)
+    
+    def onButtonPress():
+        window.destroy()
+ 
+    B1 = Button(window, text="Edit Game", fg='green', bg='white')
+    B1.grid(row=17, column=1, padx=5, pady=5)  # Adjust row and column as needed
 
-    B3 = Button(window, text="Start Game", fg='green', bg='yellow', command=on_start_game)
-    B3.grid(row=17, column=3, padx=5, pady=5)
+    B2 = Button(window, text="Game Parameters", fg='green', bg='white')
+    B2.grid(row=17, column=2, padx=5, pady=5)  # Adjust row and column as needed
 
-    B4 = Button(window, text="PreEntered Games", fg='green', bg='yellow')
-    B4.grid(row=17, column=4, padx=5, pady=5)
+    B3 = Button(window, text="Click to Start Game", fg='green', bg='white', command=on_start_game)
+    B3.grid(row=17, column=3, padx=5, pady=5)  # Adjust row and column as needed
 
-    B5 = Button(window, text="View Game", fg='green', bg='yellow')
-    B5.grid(row=17, column=5, padx=5, pady=5)
+    B4 = Button(window, text="PreEntered Games", fg='green', bg='white')
+    B4.grid(row=17, column=4, padx=5, pady=5)  # Adjust row and column as needed
 
-    B6 = Button(window, text="Clear Game", fg='green', bg='yellow')
-    B6.grid(row=17, column=6, padx=5, pady=5)
+    B5 = Button(window, text="View Game", fg='green', bg='white')
+    B5.grid(row=17, column=5, padx=5, pady=5)  # Adjust row and column as needed
 
+    B6 = Button(window, text="Click to Clear Game", fg='green', bg='white', command= onButtonPress)
+    B6.grid(row=17, column=6, padx=5, pady=5)  # Adjust row and column as needed
     window.mainloop()
+        
+
 
 # Main program
 if __name__ == "__main__":

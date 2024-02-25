@@ -1,37 +1,32 @@
-# PHOTON LASER TAG
+# PHOTON LASER TAG TEAM-15
 
-Description of your project goes here.
+Created a Photon Laser Tag System for a Software Engineering course at the University of Arkansas. 
 
 ## Getting Started
 
 These instructions will help you get a copy of the project up and running on your local machine.
 
-### Prerequisites
-
 Make sure you have the following installed on your machine:
 
-- Python (version X.X.X)
-- Any other dependencies...
+- Python 3.12 or greater
 
 ### Installing
 
+
+To download the project download the project as a zip file.
+
 1. Clone the repository to your local machine:
 
-    ```bash
-    git clone https://github.com/your-username/your-repository.git
-    ```
+    
+    (https://github.com/team-15-csce3513/photon.git)
+    
 
 2. Navigate to the project directory:
 
     ```bash
-    cd your-repository
+    cd photon
     ```
-
-3. Install the required dependencies:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
+    
 
 ### Running the Program
 

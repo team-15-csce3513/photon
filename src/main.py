@@ -36,7 +36,7 @@ def main():
     # Destroy the splash screen
 
     # Call the player entry screen
-    create_player_entry_screen()
+    create_player_entry_screen(supabase_client)
 
     # Run UDP client and server in separate threads
     # client_thread = threading.Thread(target=udp_client)

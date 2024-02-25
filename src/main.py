@@ -2,8 +2,9 @@ import tkinter as tk
 from splash import build as build_splash
 from entry import create_player_entry_screen
 import threading
+# from entry import window as root
 import time
-from supabase_config import initialize_supabase
+# from supabase_config import initialize_supabase
 import os
 from dotenv import load_dotenv
 
@@ -15,29 +16,24 @@ print("SUPABASE_URL:", os.getenv("SUPABASE_URL"))
 print("SUPABASE_KEY:", os.getenv("SUPABASE_KEY"))
 
 # Create Supabase client
-supabase_client = initialize_supabase()
+# supabase_client = initialize_supabase()
 
 def main():
-    root = tk.Tk()
-
-    def close_root(event):
-        root.destroy()
-
-    root.title("Main Application")
-    root.geometry("800x600")
-    root.configure(bg="black")
-
-    root.bind('<Escape>', close_root)
+    window = tk.Tk()
+    window.title("Splash Screen")
+    window.geometry("800x600")
 
     # Build and display splash screen
-    splash_screen = build_splash(root)
-    root.update()
-
-    # Simulate some processing time
+    splash_screen = build_splash(window)
+    window.update()
     time.sleep(2)
 
-    # Destroy the splash screen
     splash_screen.destroy()
+    
+    window.destroy()
+    # Simulate some processing time
+
+    # Destroy the splash screen
 
     # Call the player entry screen
     create_player_entry_screen()
@@ -53,7 +49,7 @@ def main():
     # client_thread.join()
     # server_thread.join()
 
-    root.mainloop()
+    window.mainloop()
 
 if __name__ == "__main__":
     main()

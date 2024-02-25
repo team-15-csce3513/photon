@@ -64,3 +64,11 @@ class CombinedUDPClientServer:
 
             # Sending a reply to client
             UDPServerSocket.sendto(bytesToSend, address)
+
+def main():
+    combined_client_server = CombinedUDPClientServer()
+    combined_client_server.udp_client()
+    combined_client_server.udp_server()
+
+if __name__ == "__main__":
+    main()

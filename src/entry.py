@@ -37,23 +37,29 @@ def create_player_entry_screen():
             entry.grid(row=i+2, column=j+4, padx=5, pady=5)
 
     # Buttons that will be on the bottom of the screen
-    B1 = Button(window, text="Edit Game", fg='green', bg='yellow')
+    B1 = Button(window, text="Edit Game", fg='green', bg='white')
     B1.grid(row=17, column=1, padx=5, pady=5)  # Adjust row and column as needed
 
-    B2 = Button(window, text="Game Parameters", fg='green', bg='yellow')
+    B2 = Button(window, text="Game Parameters", fg='green', bg='white')
     B2.grid(row=17, column=2, padx=5, pady=5)  # Adjust row and column as needed
 
-    B3 = Button(window, text="Start Game", fg='green', bg='yellow')
+    B3 = Button(window, text="Start Game", fg='green', bg='white')
     B3.grid(row=17, column=3, padx=5, pady=5)  # Adjust row and column as needed
 
-    B4 = Button(window, text="PreEntered Games", fg='green', bg='yellow')
+    B4 = Button(window, text="PreEntered Games", fg='green', bg='white')
     B4.grid(row=17, column=4, padx=5, pady=5)  # Adjust row and column as needed
 
-    B5 = Button(window, text="View Game", fg='green', bg='yellow')
+    B5 = Button(window, text="View Game", fg='green', bg='white')
     B5.grid(row=17, column=5, padx=5, pady=5)  # Adjust row and column as needed
 
-    B6 = Button(window, text="Clear Game", fg='green', bg='yellow')
+    B6 = Button(window, text="Clear Game", fg='green', bg='white')
     B6.grid(row=17, column=6, padx=5, pady=5)  # Adjust row and column as needed
+
+    
+    def close_root(event):
+        window.destroy()
+
+    window.bind('<Escape>', close_root)
 
     window.mainloop()
 

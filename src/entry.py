@@ -1,60 +1,61 @@
 import tkinter as tk
-from tkinter import Button
-from tkinter import font
-
+from tkinter import Button, Entry, Label, font
 
 def create_player_entry_screen():
-    # Create a new Tkinter window
-    #window = tk.Tk()
+    # Create the main window
+    window = tk.Tk()
+    window.title("Player Entry Screen")
+    window.geometry("1250x800")
 
-    # Define a function to close the window
-    #def close_window(event):
-     #   window.destroy()
+    # Create and configure the header label
+    header_font = font.Font(family='Helvetica', size=100, weight='bold')
+    header_label = Label(window, text="Laser Tag Game", font=header_font, fg='white')
+    header_label.grid(row=0, column=0, columnspan=6, pady=(20, 10), sticky="ew")  # Adjust columnspan and pady as needed
+    header_label.config(font=("Helvetica", 50, "bold"))  # Adjust the font size for bigger text
 
-    # Set the window title
-    #window.title("Player Entry Screen")
+    # Labels for column headers
+    labels = ['Equipment ID', 'User ID', 'Username']
+    for i, label_text in enumerate(labels):
+        # Red team column headers
+        red_label = Label(window, text=label_text, font=("Helvetica", 12), bg='red', fg='white')
+        red_label.grid(row=1, column=i+1, padx=5, pady=5)
 
-    # Set the window size
-    #window.geometry("800x600")
+        # Green team column headers
+        green_label = Label(window, text=label_text, font=("Helvetica", 12), bg='green', fg='white')
+        green_label.grid(row=1, column=i+4, padx=5, pady=5)
 
-    # Bind the Esc key to the close_window function
-    #window.bind('<Escape>', close_window)
+    # Entry fields for red team
+    for i in range(15):
+        for j in range(3):
+            entry = Entry(window, bg='red')
+            entry.grid(row=i+2, column=j+1, padx=5, pady=5)
 
-    # Text widget
-    textFont = font.Font(family='Helvetica', size=25, weight='bold')
-    Text1 = tk.Text(height=1, width=16, font = textFont)
-    Text1.tag_configure('blue_text', foreground='blue')
-    Text1.insert("1.0", "Laser Tag Game\n", "blue_text")
-    # Text1.tag_add('blue_text', "1.0", "end")
-    Text1.pack()
+    # Entry fields for green team
+    for i in range(15):
+        for j in range(3):
+            entry = Entry(window, bg='green')
+            entry.grid(row=i+2, column=j+4, padx=5, pady=5)
 
-    # Buttons that will be on bottom of screen 
-    B1 = Button(text = "Edit Game", fg='green', bg='yellow')
-    B1.place(x=0, y=500)
-    B1.config(height=5)
-    B2 = Button(text = "Game Parameters", fg='green', bg='yellow')
-    B2.place(x=97, y=500)
-    B2.config(height=5)
-    B3 = Button(text = "Start Game", fg='green', bg='yellow')
-    B3.place(x=242, y=500)
-    B3.config(height=5)
-    B4 = Button(text = "PreEntered Games", fg='green', bg='yellow')
-    B4.place(x=342, y=500)
-    B4.config(height=5)
-    #B5 = Button(text = "")
-    #B5.place(x=475, y=550)
-    B6 = Button(text = "View Game", fg='green', bg='yellow')
-    B6.place(x=495, y=500)
-    B6.config(height=5)
-    B7 = Button(text = "Flick Sync", fg='green', bg='yellow')
-    B7.place(x=602, y=500)
-    B7.config(height=5)
-    B8 = Button(text = "Clear Game", fg='green', bg='yellow')
-    B8.place(x=700, y=500)
-    B8.config(height=5)
+    # Buttons that will be on the bottom of the screen
+    B1 = Button(window, text="Edit Game", fg='green', bg='yellow')
+    B1.grid(row=17, column=1, padx=5, pady=5)  # Adjust row and column as needed
 
-    # Start the window's event loop
-    #window.mainloop()
+    B2 = Button(window, text="Game Parameters", fg='green', bg='yellow')
+    B2.grid(row=17, column=2, padx=5, pady=5)  # Adjust row and column as needed
+
+    B3 = Button(window, text="Start Game", fg='green', bg='yellow')
+    B3.grid(row=17, column=3, padx=5, pady=5)  # Adjust row and column as needed
+
+    B4 = Button(window, text="PreEntered Games", fg='green', bg='yellow')
+    B4.grid(row=17, column=4, padx=5, pady=5)  # Adjust row and column as needed
+
+    B5 = Button(window, text="View Game", fg='green', bg='yellow')
+    B5.grid(row=17, column=5, padx=5, pady=5)  # Adjust row and column as needed
+
+    B6 = Button(window, text="Clear Game", fg='green', bg='yellow')
+    B6.grid(row=17, column=6, padx=5, pady=5)  # Adjust row and column as needed
+
+    window.mainloop()
 
 # Main program
 if __name__ == "__main__":

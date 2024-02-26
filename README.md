@@ -1,3 +1,5 @@
+![logo](https://github.com/team-15-csce3513/photon/assets/102569626/11f706d9-e817-4725-9b40-e111e3f0dc05)
+
 # PHOTON LASER TAG TEAM-15
 
 Created a Photon Laser Tag System for a Software Engineering course at the University of Arkansas. 

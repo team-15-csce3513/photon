@@ -11,8 +11,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Print loaded environment variables (for debugging)
-print("SUPABASE_URL:", os.getenv("SUPABASE_URL"))
-print("SUPABASE_KEY:", os.getenv("SUPABASE_KEY"))
+# print("SUPABASE_URL:", os.getenv("SUPABASE_URL"))
+# print("SUPABASE_KEY:", os.getenv("SUPABASE_KEY"))
 
 # Create Supabase client
 supabase_client = initialize_supabase()

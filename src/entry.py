@@ -20,10 +20,11 @@ def create_player_entry_screen(supabase_client):
     window = tk.Tk()
     window.title("Player Entry Screen")
     window.geometry("1250x800")
+    window.configure(bg='black')
 
     # Create and configure the header label
     header_font = font.Font(family='Helvetica', size=100, weight='bold')
-    header_label = Label(window, text="Team-15 Laser Tag Game", font=header_font, fg='white')
+    header_label = Label(window, text="Team-15 Laser Tag Game", font=header_font, fg='white', bg='black')
     header_label.grid(row=0, column=0, columnspan=6, pady=(20, 10), sticky="ew")
     header_label.config(font=("Helvetica", 50, "bold"))
     
@@ -63,8 +64,10 @@ def create_player_entry_screen(supabase_client):
 
     # Buttons that will be on the bottom of the screen
     equipment_window = tk.Toplevel()
+    equipment_window.configure(bg='black')
     equipment_window.geometry("800x600")
     
+        
     # Starting the game when the button is clicked
     
     def on_start_game():
@@ -92,44 +95,12 @@ def create_player_entry_screen(supabase_client):
         current_row += 1
         equipment_window.update()
     
-        # time.sleep(1)
+        # time.sleep(5)
         # equipment_window.destroy()
     
     red_entries = [tk.Entry(), tk.Entry()]
     green_entries = [tk.Entry(), tk.Entry()]
-        
-    # def on_start_game():
-    #     global current_row
-        
-    #     for entry in red_entries:
-    #         equipment_id = entry.get()
-    #         transmit_equipment_code(equipment_id, 'red')
-        
-    #     label_red.config(text="Equipment codes transmitted for red team.")
-    #     label_red.grid(row=current_row, column=1)
 
-    #     for entry in green_entries:
-    #         equipment_id = entry.get()
-    #         transmit_equipment_code(equipment_id, 'green')
-        
-    #     label_green.config(text="Equipment codes transmitted for green team.")
-    #     label_green.grid(row=current_row, column=2, padx=5, pady=5)
-
-    #     current_row += 1  # Increment the row index for the next call
-
-    #     # Example usage:
-    #     equipment_window = tk.Tk()
-    #     current_row = 0
-
-    #     # Create labels outside the function
-    #     label_red = tk.Label(equipment_window, text="", font=("Helvetica", 12), bg='red', fg='white')
-    #     label_green = tk.Label(equipment_window, text="", font=("Helvetica", 12), bg='green', fg='white')
-
-    #     # Create a button that calls on_click_splash
-
-    #     equipment_window.mainloop()
-
-        
   
         
     def onButtonPress(event):
@@ -182,4 +153,5 @@ def create_player_entry_screen(supabase_client):
     
 if __name__ == "__main__":
     create_player_entry_screen()
+    
   

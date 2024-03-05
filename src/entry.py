@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import Button, Entry, Label, font
 import socket
 from splash import build
+from countdown import create_countdown_screen
 import time
 
 red_entries = []
@@ -71,6 +72,8 @@ def create_player_entry_screen(supabase_client):
     # Starting the game when the button is clicked
     
     def on_start_game():
+        window.destroy() #weird prerequisent to make countdown work...
+        create_countdown_screen() 
         current_row = 0
         # equipment_window.destroy()
         # transmit equipment codes when Start Game button is clicked

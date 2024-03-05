@@ -20,6 +20,8 @@ red_entries = []
 green_entries = []
 red_name_entries = []
 green_name_entries = []
+red_user_id_entries = []
+green_user_id_entries = []
 
 def on_tab(event: tk.Event, root: tk.Tk, entry_ids: Dict, users: Dict) -> None:
     global database_response
@@ -186,17 +188,28 @@ def create_player_entry_screen():
             transmit_equipment_code(equipment_id, 'green')
 
         # Label for green team transmission
-        label_green = tk.Label(equipment_window, text="Equipment codes transmitted for green team.", font=("Helvetica", 12), bg='green', fg='white')
-        label_green.grid(row=0, column=2, padx=5, pady=5)
+        # label_green = tk.Label(equipment_window, text="Equipment codes transmitted for green team.", font=("Helvetica", 12), bg='green', fg='white')
+        # label_green.grid(row=0, column=2, padx=5, pady=5)
 
-        label_red = tk.Label(equipment_window, text="Equipment codes transmitted for red team.", font=("Helvetica", 12), bg='red', fg='white')
-        label_red.grid(row=0, column=1, padx=5, pady=5)
+        # label_red = tk.Label(equipment_window, text="Equipment codes transmitted for red team.", font=("Helvetica", 12), bg='red', fg='white')
+        # label_red.grid(row=0, column=1, padx=5, pady=5)
         # Display collected player data
         if player_data:
             print("Player Data:")
+            Window_root = tk.Tk()  
+            Window_root.geometry("800x600")
+            Window_root.title("Player Data")
+            Window_root.config(bg='black')
+            
             for data in player_data:
                 if data[0] and data[1] and data[2]:
-                    print(f"Equipment ID: {data[0]}, Player Name: {data[1]}, User ID:{data[2]}")
+                    print(f"Equipment ID: {data[0]}, Player Name: {data[1]}, User ID: {data[2]}")
+                    Data_Print = f"Equipment ID: {data[0]}, Player Name: {data[1]}, User ID: {data[2]}"
+                    # Creating a label and placing it in the Tkinter window
+                    label_Print = tk.Label(Window_root, text=Data_Print, font=("Helvetica", 12), bg='black', fg='white')
+                    label_Print.pack()
+                    
+            Window_root.mainloop()
 
 
     def onButtonPress(event):
@@ -221,6 +234,12 @@ def create_player_entry_screen():
             entry.delete(0, tk.END)
         for entry in green_name_entries:
             entry.delete(0, tk.END)
+        for entry in red_user_id_entries:
+            entry.delete(0, tk.END)
+        for entry in green_user_id_entries:
+            entry.delete(0, tk.END)
+        
+        equipment_window.update()
         
     B1 = Button(window, text="Edit Game", fg='green', bg='white')
     B1.grid(row=17, column=1, padx=5, pady=5)

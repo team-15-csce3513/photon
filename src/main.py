@@ -41,7 +41,7 @@ def main():
 
 
     # Call the player entry screen
-    create_player_entry_screen(supabase_client)
+    create_player_entry_screen()
 
 
     # Run UDP client and server in separate threads

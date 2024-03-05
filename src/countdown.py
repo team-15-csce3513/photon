@@ -5,8 +5,7 @@ from splash import build
 import time
 from PIL import Image, ImageTk
 
-def create_countdown_screen():
-    CDwindow = tk.Tk()
+def create_countdown_screen(CDwindow):
     CDwindow.title("Countdown Screen")
     CDwindow.geometry("1250x800")
 

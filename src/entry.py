@@ -72,8 +72,10 @@ def create_player_entry_screen(supabase_client):
     # Starting the game when the button is clicked
     
     def on_start_game():
-        window.destroy() #weird prerequisent to make countdown work...
-        create_countdown_screen() 
+        window.iconify()
+        equipment_window.iconify() #weird prerequisent to make countdown work...
+        countdown_window = tk.Toplevel(window)
+        create_countdown_screen(countdown_window) 
         current_row = 0
         # equipment_window.destroy()
         # transmit equipment codes when Start Game button is clicked

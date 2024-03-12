@@ -11,6 +11,9 @@ These instructions will help you get a copy of the project up and running on you
 Make sure you have the following installed on your machine:
 
 - Python 3.12 or greater
+- Tkinter
+- Pillow
+- Dotenv
 
 ### Installing
 
@@ -26,7 +29,7 @@ To download the project download the project as a zip file.
 2. Navigate to the project directory:
 
     ```bash
-    cd photon
+    cd photon/src
     ```
     
 
@@ -35,7 +38,7 @@ To download the project download the project as a zip file.
 To run the main Python file (`main.py`), follow these steps:
 
 ```bash
-python main.py
+python3 main.py
 ```
 
 #### TEAM CONTRIBUTORS

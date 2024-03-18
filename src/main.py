@@ -1,61 +1,51 @@
+from typing import Dict, List
 import tkinter as tk
-from splash import build as build_splash
-from entry import create_player_entry_screen
-import threading
-import time
+from network import Network
+from user_info import User
+import splash
+import entry
 from supabase_config import initialize_supabase
-import os
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
-
-# Print loaded environment variables (for debugging)
-# print("SUPABASE_URL:", os.getenv("SUPABASE_URL"))
-# print("SUPABASE_KEY:", os.getenv("SUPABASE_KEY"))
-
-# Create Supabase client
+# Initialize the Supabase client
 supabase_client = initialize_supabase()
 
-def main():
+def setup_main_window() -> tk.Tk:
+    """Establishes the primary window for the application."""
     window = tk.Tk()
-    window.title("Splash Screen")
-    window.geometry("800x600")
-
-    # Build and display splash screen
-    splash_screen = build_splash(window)
-    window.update()
-    time.sleep(2)
-
-    splash_screen.destroy()
-
-
-    # window.bind("Enter", splash_screen)
+    window.title("Photon: A Laser Tag System")
+    window.configure(bg="black")
     
+    # Expand the window to fill the screen
+    full_screen_width, full_screen_height = window.winfo_screenwidth(), window.winfo_screenheight()
+    window.geometry(f"{full_screen_width}x{full_screen_height}+0+0")
+    
+    return window
+
+def destroy_window(window: tk.Tk, networking: Network) -> None:
+    """Shuts down network connections and exits the main window."""
+    networking.close_sockets()
     window.destroy()
-    # Simulate some processing time
 
-    # Destroy the splash screen
+def main():
+    """Initializes and executes the main app workflow."""
+    user_data = {"green": [], "red": []}  # Stores user team allocations
 
-    # Call the player entry screen
+    networking = Network()
+    networking.set_sockets()  # Initialize networking
 
+    window = setup_main_window()  # Create the app's main window
+    
+    # Define how the app responds to closure events
+    window.bind("<Escape>", lambda evt: destroy_window(window, networking))
+    window.protocol("WM_DELETE_WINDOW", lambda: destroy_window(window, networking))
 
-    # Call the player entry screen
-    create_player_entry_screen(supabase_client)
+    splash.build(window)  # Show initial splash screen
 
+    # Move to user setup screen after initial display
+    window.after(3000, lambda: entry.build(window, user_data, networking))
 
-    # Run UDP client and server in separate threads
-    # client_thread = threading.Thread(target=udp_client)
-    # server_thread = threading.Thread(target=udp_server)
-
-    # client_thread.start()
-    # server_thread.start()
-
-    # Wait for both threads to finish
-    # client_thread.join()
-    # server_thread.join()
-
-    window.mainloop()
+    # Begin the main event loop
+    window.mainloop()  
 
 if __name__ == "__main__":
     main()

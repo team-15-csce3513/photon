@@ -160,7 +160,7 @@ def build(window: tk.Tk, users: Dict, network: Network) -> None:
     #Footer
     # Create a frame to contain the label at the bottom of the window
     bottom_frame = tk.Frame(window, bg="black")
-    bottom_frame.grid(row=2, column=0, sticky="ew")  # Assuming row=1 is used by the main content
+    bottom_frame.grid(row=2, column=0, sticky="ew")  
 
     # Configure the bottom frame to expand the label to fill the space
     bottom_frame.grid_columnconfigure(0, weight=1)

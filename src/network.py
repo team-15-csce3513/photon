@@ -96,17 +96,17 @@ class Network:
 
                 # If the red base is hit, attribute 100 points to green team and vice versa
                 # If player was hit instead, attribute 10 points to the attacker
-                # if right_code == 53:
-                #     current_game_state.red_base_hit(left_code)
-                #     self.transmit_equipment_code(str(RED_BASE_SCORED_CODE))
-                # elif right_code == 43:
-                #     current_game_state.green_base_hit(left_code)
-                #     self.transmit_equipment_code(str(GREEN_BASE_SCORED_CODE))
-                # elif right_code != 53 and right_code != 43 and right_code <= 100:
-                #     current_game_state.player_hit(left_code, right_code)
-                #     self.transmit_player_hit(right_code)
-                # else:
-                #     print("Invalid codes: Left Code is " + str(left_code) + " Right Code is " + str(right_code))
+                if right_code == 53:
+                    current_game_state.red_base_hit(left_code)
+                    self.transmit_equipment_code(str(RED_BASE_SCORED_CODE))
+                elif right_code == 43:
+                    current_game_state.green_base_hit(left_code)
+                    self.transmit_equipment_code(str(GREEN_BASE_SCORED_CODE))
+                elif right_code != 53 and right_code != 43 and right_code <= 100:
+                    current_game_state.player_hit(left_code, right_code)
+                    self.transmit_player_hit(right_code)
+                else:
+                    print("Invalid codes: Left Code is " + str(left_code) + " Right Code is " + str(right_code))
 
         except Exception as e:
             print("Error while receiving data:", e)

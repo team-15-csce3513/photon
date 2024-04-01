@@ -160,7 +160,7 @@ def build(window: tk.Tk, users: Dict, network: Network) -> None:
     #Footer
     # Create a frame to contain the label at the bottom of the window
     bottom_frame = tk.Frame(window, bg="black")
-    bottom_frame.grid(row=2, column=0, sticky="ew")  
+    bottom_frame.grid(row=2, column=0, sticky="ew")  # Assuming row=1 is used by the main content
 
     # Configure the bottom frame to expand the label to fill the space
     bottom_frame.grid_columnconfigure(0, weight=1)
@@ -225,8 +225,8 @@ def build(window: tk.Tk, users: Dict, network: Network) -> None:
     window.grid_columnconfigure(20, weight=1)
     window.grid_columnconfigure(21, weight=1)
     window.grid_columnconfigure(22, weight=1)
-    window.grid_rowconfigure(0, weight=1)  
-    window.grid_rowconfigure(1, weight=90)  
+    window.grid_rowconfigure(0, weight=1)  # Top area for "Team 15" label, minimal expansion
+    window.grid_rowconfigure(1, weight=90)  # Main content area, maximum expansion
     window.grid_rowconfigure(2, weight=1)
     window.grid_rowconfigure(3, weight=1)
     window.grid_rowconfigure(4, weight=1)
@@ -244,7 +244,7 @@ def build(window: tk.Tk, users: Dict, network: Network) -> None:
 
     # Create labels for each instruction within the instructions frame
     window.instruction_1 = tk.Label(bottom_frame, text="MUST <Tab> after input", font=("Arial", 12), fg="white", bg="black")
-    window.instruction_1.grid(row=3, column=0, sticky="ew") 
+    window.instruction_1.grid(row=3, column=0, sticky="ew") # Pack to the west (left side) of the frame
 
     window.instruction_2 = tk.Label(bottom_frame, text="Equipment code MUST match players", font=("Arial", 12), fg="white", bg="black")
     window.instruction_2.grid(row=4, column=0, sticky="ew")  
@@ -253,6 +253,13 @@ def build(window: tk.Tk, users: Dict, network: Network) -> None:
     window.instruction_3.grid(row=5, column=0, sticky="ew")  
 
 
-# Main program
-if __name__ == "__main__":
-    create_player_entry_screen()
+
+
+
+
+
+
+
+
+
+  

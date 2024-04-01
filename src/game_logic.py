@@ -28,3 +28,42 @@ class GameState:
         self.red_base_scored: bool = False
         self.green_base_scored: bool = False
         self.game_event_list: [str] = []
+
+    def player_hit(self, equipment_shooter_code: int, equipment_hit_code: int) -> None:
+        # Attributing points to a green user
+        for user in self.green_users:
+            # Check if id matches, and if player doesn't hit own teammate
+            if user.equipment_id == equipment_shooter_code and equipment_hit_code not in self.green_user_equipment_ids:
+                user.game_score += POINTS_PER_TAG
+                self.green_team_score += POINTS_PER_TAG
+                for victim_user in self.red_users:
+                    if victim_user.equipment_id == equipment_hit_code:
+                        shot_user: User = victim_user
+                self.game_event_list.append(f"{user.username} hit {shot_user.username}")
+        
+        # Attributing points to a red user
+        for user in self.red_users:
+            # Check if id matches, and if player doesn't hit own teammate
+            if user.equipment_id == equipment_shooter_code and equipment_hit_code not in self.red_user_equipment_ids:
+                user.game_score += POINTS_PER_TAG
+                self.red_team_score += POINTS_PER_TAG
+                for victim_user in self.green_users:
+                    if victim_user.equipment_id == equipment_hit_code:
+                        shot_user: User = victim_user
+                self.game_event_list.append(f"{user.username} hit {shot_user.username}")
+
+    def red_base_hit(self, equipment_shooter_code: int) -> None:
+        for user in self.green_users:
+            # Check if id matches, and then add 100 points to the green player and team
+            if user.equipment_id == equipment_shooter_code:
+                user.game_score += POINTS_PER_BASE_HIT
+                self.green_team_score += POINTS_PER_BASE_HIT
+                self.game_event_list.append(f"{user.username} hit red base")
+
+    def green_base_hit(self, equipment_shooter_code: int) -> None:
+        for user in self.red_users:
+            # Check if id matches, and then add 100 points to the red player and team
+            if user.equipment_id == equipment_shooter_code:
+                user.game_score += POINTS_PER_BASE_HIT
+                self.red_team_score += POINTS_PER_BASE_HIT
+                self.game_event_list.append(f"{user.username} hit green base")

@@ -70,7 +70,7 @@ When entering the Equipment ID's in the player entry console, be sure to enter t
 |-----------------|-----------------|
 |Aaliyah Garcia   |   [aaliyahgarcia](https://github.com/aaliyahgarcia) |
 |Giovanni Huesca  |   [GioWPS](https://github.com/GioWPS)        |
-|Nadine Filat     |   [lilnadine](https://github.com/lilnadine)     |
+|Nadine Filat     |   [nadinefilat](https://github.com/nadinefilat)     |
 |Pranav Mahesh    |   [pmahesh29](https://github.com/pmahesh29)|
 -------------------------------------
 

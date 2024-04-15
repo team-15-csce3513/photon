@@ -5,8 +5,8 @@ from typing import Tuple
 
 # Constants for network communication
 BUFFER_SIZE = 1024
-SERVER_ADDRESS_PORT = ("127.0.0.1", 7500)
 CLIENT_ADDRESS_PORT = ("127.0.0.1", 7501)
+SERVER_ADDRESS_PORT = ("127.0.0.1", 7500)
 START_CODE = "202"
 END_CODE = "221"
 
@@ -38,24 +38,34 @@ def main():
 
     # Setup sockets for communication
     receiver_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    receiver_socket.bind(SERVER_ADDRESS_PORT)
+    receiver_socket.bind(CLIENT_ADDRESS_PORT)
     sender_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     wait_for_start(receiver_socket)
 
+    counter = 0
     while True:
-        # Select players for generating a message
-        green_player = green1 if random.choice([True, False]) else green2
-        red_player = red1 if random.choice([True, False]) else red2
-        message = f"{green_player}:{red_player}" if random.choice([True, False]) else f"{red_player}:{green_player}"
-        print(f"\n{message}")
+        counter += 1
+        redplayer = red1 if random.randint(1, 2) == 1 else red2
+        greenplayer = green1 if random.randint(1, 2) == 1 else green2
 
-        # Prompt for continuation or termination
+        if random.randint(1, 2) == 1:
+            message = f"{redplayer}:{greenplayer}"
+        else:
+            message = f"{greenplayer}:{redplayer}"
+
+        # Special messages on the 10th and 20th iterations
+        if counter == 10:
+            message = f"{redplayer}:43"
+        elif counter == 20:
+            message = f"{greenplayer}:53"
+
+        print(f"\n{message}")
         if input("Exit? (y/n): ").lower() == "y":
             break
-        print(f"Sending: {message}")
-        sender_socket.sendto(message.encode(), CLIENT_ADDRESS_PORT)
 
-        # Handling incoming data
+        print(f"Sending: {message}")
+        sender_socket.sendto(message.encode(), SERVER_ADDRESS_PORT)
+
         data_received, _ = receiver_socket.recvfrom(BUFFER_SIZE)
         data_received = data_received.decode("utf-8")
         print(f"Data received: {data_received}")

@@ -27,7 +27,7 @@ class GameState:
         # If bases are scored
         self.red_base_scored: bool = False
         self.green_base_scored: bool = False
-        self.game_event_list: [str] = []
+        self.game_event_list: List[str] = []
 
     def player_hit(self, equipment_shooter_code: int, equipment_hit_code: int) -> None:
         # Attributing points to a green user

@@ -5,8 +5,8 @@ from typing import Tuple
 
 # Constants for network communication
 BUFFER_SIZE = 1024
-SERVER_ADDRESS_PORT = ("127.0.0.1", 7501)
-CLIENT_ADDRESS_PORT = ("127.0.0.1", 7500)
+SERVER_ADDRESS_PORT = ("127.0.0.1", 7500)
+CLIENT_ADDRESS_PORT = ("127.0.0.1", 7501)
 START_CODE = "202"
 END_CODE = "221"
 

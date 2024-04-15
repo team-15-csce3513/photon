@@ -2,6 +2,7 @@ from typing import Dict, List
 from tkinter import messagebox
 import tkinter as tk
 from tkinter import Button, Entry, Label, font, Frame
+import tkinter.simpledialog as simpledialog
 
 import pygubu
 
@@ -11,45 +12,8 @@ from main import supabase_client
 
 database_response = None
 
-def handle_equipment_id_validation(entry_field_id, widget, users, window):
-    if not widget.get().isdigit() or not 0 <= int(widget.get()) <= 100:
-        messagebox.showerror("Error", "Equipment ID must be an integer between 0 and 100.")
-        widget.delete(0, tk.END)
-        return False
-    if int(widget.get()) in {u.equipment_id for team_users in users.values() for u in team_users}:
-        messagebox.showerror("Error", "This Equipment ID is already used.")
-        widget.delete(0, tk.END)
-        return False
-    return True
-
-def handle_user_id_field(entry_field_id, widget, users, builder, window):
-    if not widget.get().isdigit():
-        messagebox.showerror("Error", "User ID must be an integer.")
-        widget.delete(0, tk.END)
-        return False
-    data = supabase_client.table("users").select("*").eq("id", widget.get()).execute().data
-    if not data:
-        messagebox.showerror("Error", "No user found with this ID.")
-        widget.delete(0, tk.END)
-        return False
-    user_id, username = data[0]['id'], data[0]['username']
-    if user_id in {u.user_id for team_users in users.values() for u in team_users}:
-        messagebox.showerror("Error", "This User ID is already registered.")
-        widget.delete(0, tk.END)
-        return False
-    users["green" if "green" in entry_field_id else "red"].append(User(int(entry_field_id.split("_")[-1]), int(builder.get_object(entry_field_id.replace("user_id", "equipment_id"), window).get()), user_id, username))
-    builder.get_object(entry_field_id.replace("user_id", "username"), window).delete(0, tk.END)
-    builder.get_object(entry_field_id.replace("user_id", "username"), window).insert(0, username)
-    # If not at the end, jump to next row
-    row: int = int(entry_field_id.split("_")[-1])
-    if row != 15:
-        target_entry_field_id = entry_field_id.replace(f"user_id_{row}", f"equipment_id_{row + 1}")
-        next_entry_field = builder.get_object(target_entry_field_id, window)
-        window.after_idle(lambda: next_entry_field.focus())
-    return True
-
-
-def on_tab(event: tk.Event, window: tk.Tk, entry_ids: Dict, users: Dict, builder: pygubu.Builder) -> None:
+def on_tab(event: tk.Event, root: tk.Tk, entry_ids: Dict, users: Dict, builder: pygubu.Builder) -> None:
+    #global response 
     global database_response
 
     # Retrieve the ID of the field where the event occurred.
@@ -58,46 +22,106 @@ def on_tab(event: tk.Event, window: tk.Tk, entry_ids: Dict, users: Dict, builder
         return
     
     if "equipment_id" in entry_field_id:
-            if not handle_equipment_id_validation(entry_field_id, event.widget, users, window):
-                return
+        if not event.widget.get().isdigit():
+            messagebox.showerror("Error", "Equipment ID must be an integer")
+            event.widget.delete(0, tk.END)
+            root.after_idle(lambda: event.widget.focus_set())
+            return
+
+        equipment_id: int = int(event.widget.get())
+
+        if equipment_id < 0 or equipment_id > 100:
+            messagebox.showerror("Error", "Equipment ID must be between 0 and 100")
+            event.widget.delete(0, tk.END)
+            root.after_idle(lambda: event.widget.focus_set())
+            return
+
+        if equipment_id in [user.equipment_id for user in users["green"]] or equipment_id in [user.equipment_id for user in users["red"]]:
+            messagebox.showerror("Error", "Equipment ID has already been entered")
+            event.widget.delete(0, tk.END)
+            root.after_idle(lambda: event.widget.focus_set())
+            return
 
     # Handle user ID input and database lookup.
     elif "user_id" in entry_field_id:
-        if not handle_user_id_field(entry_field_id, event.widget, users, builder, window):
+        if not event.widget.get().isdigit():
+            messagebox.showerror("Error", "User ID must be an integer")
+            event.widget.delete(0, tk.END)
+            root.after_idle(lambda: event.widget.focus_set())
             return
 
-    # Process username input and update database if necessary.
-    elif entry_field_id.endswith("username") and not database_response.data:
-        # Setup for database update.
-        equipment_field_id = entry_field_id.replace("username", "equipment_id")
-        user_id_field_id = entry_field_id.replace("username", "user_id")
-        equipment_id = int(builder.get_object(equipment_field_id, window).get())
-        user_id_entry = builder.get_object(user_id_field_id, window)
-        user_id = int(user_id_entry.get())
-        input_username = event.widget.get()
+        database_response = supabase_client.table("users").select("*").eq("id", event.widget.get()).execute()
 
-        # Check for username availability.
-        usernames_in_use = [u.username for team in users.values() for u in team]
-        if input_username in usernames_in_use:
-            messagebox.showerror("Duplicate Username", "This username is already in use.")
+        if database_response.data:
+            equipment_id: int = int(builder.get_object(entry_field_id.replace("user_id", "equipment_id"), root).get())
+            user_id: int = int(database_response.data[0]["id"])
+            username: str = database_response.data[0]["username"]
+            
+            if user_id in [user.user_id for user in users["green"]] or user_id in [user.user_id for user in users["red"]]:
+                messagebox.showerror("Error", "User ID has already been entered")
+                event.widget.delete(0, tk.END)
+                root.after_idle(lambda: event.widget.focus_set())
+                return
+
+            users["green" if "green" in entry_field_id else "red"].append(User(int(entry_field_id.split("_")[-1]), equipment_id, user_id, username))
+
+            builder.get_object(entry_field_id.replace("user_id", "username"), root).insert(0, username)
+
+            row: int = int(entry_field_id.split("_")[-1])
+            if row != 15:
+                next_entry_field = builder.get_object(entry_field_id.replace(f"user_id_{row}", f"equipment_id_{row + 1}"), root)
+                root.after_idle(lambda: next_entry_field.focus_set())
+        else:
+            # User does not exist, prompt for new username entry
+            messagebox.showinfo("Info", "Type new username")
+            # Clear any previously typed username and set focus to the username field for user input
+            username_entry_field = builder.get_object(entry_field_id.replace("user_id", "username"), root)
+            username_entry_field.delete(0, tk.END)
+            root.after_idle(lambda: username_entry_field.focus_set())
+
+    # If the user tabs from the username entry field, insert the user into the database if they don't already exist
+    elif "username" in entry_field_id and database_response.data == []:
+
+        # TODO: If the user goes back and deletes the username or user ID, remove the user from the users dictionary
+
+        # Get equipment ID and user ID, user ID entry box for refocusing
+        equipment_id: int = int(builder.get_object(entry_field_id.replace("username", "equipment_id"), root).get())
+        user_id_widget: tk.Entry = builder.get_object(entry_field_id.replace("username", "user_id"), root)
+        user_id: int = int(user_id_widget.get())
+
+        # Get username from entry field
+        username = event.widget.get()
+
+        # Throw error if username already exists in users dictionary or database
+        if username in [user.username for user in users["green"]] or username in [user.username for user in users["red"]]:
+            messagebox.showerror("Error", "Username has already been entered")
             event.widget.delete(0, tk.END)
-            return window.after_idle(event.widget.focus_set)
-
-        if supabase_client.table("users").select("username").eq("username", input_username).execute().data:
-            messagebox.showerror("Duplicate Username", "This username exists in the database.")
+            root.after_idle(lambda: event.widget.focus_set())
+            return
+        
+        if supabase_client.table("users").select("*").eq("username", username).execute().data:
+            messagebox.showerror("Error", "Username already exists in database")
             event.widget.delete(0, tk.END)
-            return window.after_idle(event.widget.focus_set)
+            root.after_idle(lambda: event.widget.focus_set())
+            return
 
-        # Add new user to system and database.
-        new_user = User(int(entry_field_id.split("_")[-1]), equipment_id, user_id, input_username)
-        users["green" if "green" in entry_field_id else "red"].append(new_user)
+        # Add user to dictionary
+        users["green" if "green" in entry_field_id else "red"].append(User(int(entry_field_id.split("_")[-1]), equipment_id, user_id, username))
+
+        # Attempt to insert the user into the database, display an error message if the POST request fails
         try:
-            supabase_client.table("users").insert({"id": user_id, "username": input_username}).execute()
-        except Exception as exc:
-            messagebox.showerror("Database Error", f"Failed to insert user: {exc}")
-            user_id_entry.delete(0, tk.END)
+            supabase_client.table("users").insert({
+                "id": user_id,
+                "username": username
+            }).execute()
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
+            user_id_widget.delete(0, tk.END)
             event.widget.delete(0, tk.END)
-            return window.after_idle(user_id_entry.focus_set)
+            root.after_idle(lambda: user_id_widget.focus_set())
+            return
+
+
 
     #Clear
 def on_f12(main_frame: tk.Tk, entry_ids: Dict, users: Dict, builder: pygubu.Builder) -> None:
@@ -252,14 +276,5 @@ def build(window: tk.Tk, users: Dict, network: Network) -> None:
     window.instruction_3 = tk.Label(bottom_frame, text="Will lookup after User ID", font=("Arial", 12), fg="white", bg="black")
     window.instruction_3.grid(row=5, column=0, sticky="ew")  
 
+######################
 
-
-
-
-
-
-
-
-
-
-  

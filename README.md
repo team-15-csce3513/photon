@@ -30,7 +30,9 @@ To download the project download the project as a zip file.
     ```bash
     cd photon/src
     ```
-3. Please create a [Supabase](https://supabase.com/) account and initiate a new project with a table named `users`. After setting up your project, go to the project settings and copy the `Project URL` and `service_role` key from the `API` tab. These values should be set as environment variables on your local machine, we have our own .env file provided as a guide to you. You should be able to to use your own supabase credentials by replacing the lines of code in the .env file.
+3. Please create a [Supabase](https://supabase.com/) account and initiate a new project with a table named `users`. After setting up your project, go to the project settings and copy the `Project URL` and `service_role` key from the `API` tab. These values should be set as environment variables on your local machine, we have our own .env file provided as a guide to you. You should be able to use your own supabase credentials by replacing the lines of code in the .env file.
+
+Change the name of the .env.example file name to .env and add the Supabase URL and key as shown below.
 
 ```bash
 SUPABASE_URL='enter_your_url_here'

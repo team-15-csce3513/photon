@@ -90,7 +90,7 @@ class Network:
             while int(time.time()) < (start_time + GAME_TIME_SECONDS):
                 raw_message, return_address = self.receive_socket.recvfrom(BUFFER_SIZE)
                 decoded_message: str = raw_message.decode("utf-8")
-                message_components: [str] = decoded_message.split(":")
+                message_components: list[str] = decoded_message.split(":")
                 left_code: int = int(message_components[0])
                 right_code: int = int(message_components[1])
 

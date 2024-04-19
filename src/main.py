@@ -9,23 +9,11 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 import warnings
 warnings.filterwarnings("ignore", message="Your system is avx2 capable but pygame was not built with support for it", category=RuntimeWarning)
 import pygame # type: ignore
-import logging
 import random
 from supabase_config import initialize_supabase
 
 # Initialize the Supabase client
 supabase_client = initialize_supabase()
-
-# initialize pygame
-pygame.init()
-
-music_tracks = ["../assets/sounds/Photon 1.mp3", "../assets/sounds/Photon 2.mp3", "../assets/sounds/Photon 3.mp3", "../assets/sounds/Photon 4.mp3", "../assets/sounds/Photon 5.mp3", "../assets/sounds/Photon 6.mp3", "../assets/sounds/Photon 7.mp3", "../assets/sounds/Photon 8.mp3"]
-
-selected_track = random.choice(music_tracks)
-
-pygame.mixer.music.load(selected_track)
-
-pygame.mixer.music.play(-1)
 
 
 def setup_main_window() -> tk.Tk:
@@ -47,7 +35,6 @@ def destroy_window(window: tk.Tk, networking: Network) -> None:
 
 def main():
     # Displaying which track is being played
-    print(f"Now Playing {selected_track}")
     
     """Initializes and executes the main app workflow."""
     user_data = {"green": [], "red": []}  # Stores user team allocations

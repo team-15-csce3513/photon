@@ -1,10 +1,11 @@
 from typing import Dict
-import pygubu
+import pygubu # type: ignore
 import tkinter as tk
 import os 
+import time
 import random
 import threading
-
+import pygame   # type: ignore
 from network import Network
 from game_logic import GameState
 from main import destroy_window
@@ -48,6 +49,7 @@ def destroy_current_game(window: tk.Tk, main_frame: tk.Frame, users: dict, netwo
     end_game_button.place(relx=0.5, rely=0.6, anchor=tk.CENTER)
 
 def update_stream(game: GameState, action_stream: tk.Frame) -> None:
+    base_text = ("*B* ", ("Roboto", 16, "bold"), "#FFFFFF", "black")
     # Add scroll effect to action stream with game.game_event_list queue
     if len(game.game_event_list) > 0:
         # Get the last event from the queue along with player name
@@ -57,16 +59,16 @@ def update_stream(game: GameState, action_stream: tk.Frame) -> None:
         # Create label for event and add to action stream
         event_label: tk.Label = tk.Label(action_stream, text=event, font=("Fixedsys", 16), bg="#FFFFFF", fg="black")
         event_label.pack(side=tk.TOP, fill=tk.X)
-
+        
         # Add B to player name if they hit a base
         if "hit green base" in event:
             for user in game.red_users:
-                if user.username == player_name and "B: " not in user.username:
-                    user.username = "*B* " + user.username
+                if user.username == player_name and "*B*" not in user.username:
+                    user.username = f"{base_text[0]} {user.username}"
         elif "hit red base" in event:
             for user in game.green_users:
-                if user.username == player_name and "B: " not in user.username:
-                    user.username = "*B* " + user.username
+                if user.username == player_name and "*B*" not in user.username:
+                    user.username = f"{base_text[0]} {user.username}"
         
         # Remove the last event from the bottom of the action stream
         if len(action_stream.winfo_children()) > 10:
@@ -96,13 +98,25 @@ def update_timer(timer_label: tk.Label, seconds: int, window: tk.Tk, main_frame:
     # Update text being displayed in timer label
     mins, secs = divmod(seconds, 60)
     timer_label.config(text=f"Time Remaining: {mins:01d}:{secs:02d}", fg="black")
+    timer_label.config(fg="green")
 
+    if seconds <= 15:
+            timer_label.config(fg="red")
+            window.update()
+            time.sleep(0.5)  # Adjust blinking speed as needed
+            timer_label.config(fg="white")
+            window.update()
+            time.sleep(0.5)
+            
     # Continue counting down, destroy main frame when timer reaches 0
     if seconds > 0:
         seconds -= 1
         timer_label.after(1000, update_timer, timer_label, seconds, window, main_frame, users, network, game)
+
     else:
         destroy_current_game(window, main_frame, users, network, game)
+        pygame.mixer.music.stop()
+
 
 def build(network: Network, users: Dict, window: tk.Tk) -> None:
     # Load the UI file and create the builder
@@ -124,8 +138,10 @@ def build(network: Network, users: Dict, window: tk.Tk) -> None:
     # Update score labels, timer, and action stream
     update_score(game, main_frame, builder)
     update_stream(game, action_stream)
-    update_timer(timer_label, 360, window, main_frame, users, network, game)
+    update_timer(timer_label, 120, window, main_frame, users, network, game)
 
     # Start thread for UDP listening
     game_thread: threading.Thread = threading.Thread(target=network.run_game, args=(game,), daemon=True)
     game_thread.start()
+
+    

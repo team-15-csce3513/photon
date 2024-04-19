@@ -1,10 +1,12 @@
 from typing import Dict
-from PIL import Image, ImageTk
-import cv2
+from PIL import Image, ImageTk # type: ignore
+import cv2 # type: ignore
 import os
 import tkinter as tk
-import pygubu
+import pygubu # type: ignore
 from network import Network
+import pygame # type: ignore
+import random
 
 
 
@@ -20,6 +22,8 @@ def update_video(video_label: tk.Label, cap: cv2.VideoCapture, frame_rate: int, 
         video_width: The width to resize video frames to.
         video_height: The height to resize video frames to.
     """
+        # initialize pygame
+
     # Attempt to read the next frame from the video capture
     success, frame = cap.read()
     
@@ -59,12 +63,22 @@ def update_timer(timer_label: tk.Label, seconds: int, main_frame: tk.Frame, netw
     When the countdown reaches zero, it initiates the transition to the game.
     """
     # Countdown still active, decrement and schedule next update
+    if seconds == 18:
+        pygame.init()
+        music_tracks = ["../assets/sounds/Photon 1.mp3", "../assets/sounds/Photon 2.mp3", "../assets/sounds/Photon 3.mp3", "../assets/sounds/Photon 4.mp3", "../assets/sounds/Photon 5.mp3", "../assets/sounds/Photon 6.mp3", "../assets/sounds/Photon 7.mp3", "../assets/sounds/Photon 8.mp3"]
+        selected_track = random.choice(music_tracks)
+        pygame.mixer.music.load(selected_track)
+        print(f"Now Playing {selected_track}")
+        pygame.mixer.music.play(-1)
+
     if seconds > 0:
         timer_label.configure(text=f"Game Starts In: {seconds} Seconds", fg='black')
         root.after(1000, lambda: update_timer(timer_label, seconds - 1, main_frame, network, users, root))
     else:
         # Countdown complete, proceed to game
         start_game(main_frame, network, users, root)
+
+
 
 def start_game(main_frame: tk.Frame, network: Network, users: Dict, root: tk.Tk):
     """

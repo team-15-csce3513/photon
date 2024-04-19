@@ -68,7 +68,7 @@ def update_timer(timer_label: tk.Label, seconds: int, main_frame: tk.Frame, netw
         music_tracks = ["../assets/sounds/Photon 1.mp3", "../assets/sounds/Photon 2.mp3", "../assets/sounds/Photon 3.mp3", "../assets/sounds/Photon 4.mp3", "../assets/sounds/Photon 5.mp3", "../assets/sounds/Photon 6.mp3", "../assets/sounds/Photon 7.mp3", "../assets/sounds/Photon 8.mp3"]
         selected_track = random.choice(music_tracks)
         pygame.mixer.music.load(selected_track)
-        print(f"Now Playing {selected_track}")
+        print(f"\n\033[1m\033[3m Now Playing {selected_track}\033[0m\n")
         pygame.mixer.music.play(-1)
 
     if seconds > 0:

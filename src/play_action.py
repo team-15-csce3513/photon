@@ -62,11 +62,11 @@ def update_stream(game: GameState, action_stream: tk.Frame) -> None:
         if "hit green base" in event:
             for user in game.red_users:
                 if user.username == player_name and "B: " not in user.username:
-                    user.username = "B: " + user.username
+                    user.username = "*B* " + user.username
         elif "hit red base" in event:
             for user in game.green_users:
                 if user.username == player_name and "B: " not in user.username:
-                    user.username = "B: " + user.username
+                    user.username = "*B* " + user.username
         
         # Remove the last event from the bottom of the action stream
         if len(action_stream.winfo_children()) > 10:

@@ -87,6 +87,7 @@ Once you click `coninue`, the userID's get registered in the supabase, countdown
 
 ### 3. Starting Traffic Generator:
 After the countdown runs ends, using this traffic generator, you are able to give the commands to the players registered in the supabase to shoot each other. To give the command to shoot, you enter 'n' indicating that you don't want to exit the game. Each time you give the command, you wait till you see the command go through and a player shoots the other team.
+
 ![image](https://github.com/team-15-csce3513/photon/assets/102569626/f2e029cd-34f4-458e-a8e6-7b300771a0d3)
 
 

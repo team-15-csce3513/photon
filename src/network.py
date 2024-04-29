@@ -14,8 +14,8 @@ BUFFER_SIZE: int = 1024
 GAME_TIME_SECONDS: int = 360 # Seconds
 BROADCAST_ADDRESS: str = "127.0.0.1"
 RECEIVE_ALL_ADDRESS: str = "0.0.0.0"
-TRANSMIT_PORT: int = 7501
-RECEIVE_PORT: int = 7500
+RECEIVE_PORT: int = 7501
+TRANSMIT_PORT: int = 7500
 
 class Network:
     def __init__(self) -> None:
@@ -26,7 +26,7 @@ class Network:
         try:
             self.transmit_socket: socket.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             self.receive_socket: socket.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            self.receive_socket.bind((RECEIVE_ALL_ADDRESS, RECEIVE_PORT))
+            self.receive_socket.bind((RECEIVE_ALL_ADDRESS, TRANSMIT_PORT))
             return True
         except Exception as e:
             print(e)
@@ -47,7 +47,7 @@ class Network:
         # Transmit provided equipment code to the broadcast address
         try:
             self.transmit_socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-            self.transmit_socket.sendto(str.encode(str(equipment_code)), (BROADCAST_ADDRESS, TRANSMIT_PORT))
+            self.transmit_socket.sendto(str.encode(str(equipment_code)), (BROADCAST_ADDRESS, RECEIVE_PORT))
             return True
         except Exception as e:
             print(e)
@@ -57,7 +57,7 @@ class Network:
         # Transmit start game code to the broadcast address
         try:
             self.transmit_socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-            self.transmit_socket.sendto(str.encode(str(START_GAME_CODE)), (BROADCAST_ADDRESS, TRANSMIT_PORT))
+            self.transmit_socket.sendto(str.encode(str(START_GAME_CODE)), (BROADCAST_ADDRESS, RECEIVE_PORT))
             return True
         except Exception as e:
             print(e)
@@ -67,7 +67,7 @@ class Network:
         # Transmit end game code to the broadcast address
         try:
             self.transmit_socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-            self.transmit_socket.sendto(str.encode(str(END_GAME_CODE)), (BROADCAST_ADDRESS, TRANSMIT_PORT))
+            self.transmit_socket.sendto(str.encode(str(END_GAME_CODE)), (BROADCAST_ADDRESS, RECEIVE_PORT))
             return True
         except Exception as e:
             print(e)
@@ -77,7 +77,7 @@ class Network:
         # Transmit player hit code to the broadcast address
         try:
             self.transmit_socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-            self.transmit_socket.sendto(str.encode(str(player_code)), (BROADCAST_ADDRESS, TRANSMIT_PORT))
+            self.transmit_socket.sendto(str.encode(str(player_code)), (BROADCAST_ADDRESS, RECEIVE_PORT))
             return True
         except Exception as e:
             print(e)

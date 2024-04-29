@@ -138,7 +138,7 @@ def build(network: Network, users: Dict, window: tk.Tk) -> None:
     # Update score labels, timer, and action stream
     update_score(game, main_frame, builder)
     update_stream(game, action_stream)
-    update_timer(timer_label, 120, window, main_frame, users, network, game)
+    update_timer(timer_label, 360, window, main_frame, users, network, game)
 
     # Start thread for UDP listening
     game_thread: threading.Thread = threading.Thread(target=network.run_game, args=(game,), daemon=True)
